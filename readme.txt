@@ -15,12 +15,13 @@ Wordpress widget to show the status of one or multiple Hitbox.tv streams.
 Wordpress widget to show the status of one or multiple Hitbox.tv streams.
 
 Features:
-*   Can display multiple channels in one widget
-*   Preview image on online channels
-*   Channel name and preview image linked to hitbox.tv
-*   Displays viewer count
-*   Displays title message
-*   Displays wich game is played
+
+* Can display multiple channels in one widget
+* Preview image on online channels
+* Channel name and preview image linked to hitbox.tv
+* Displays viewer count
+* Displays title message
+* Displays wich game is played
 
 == Installation ==
 
