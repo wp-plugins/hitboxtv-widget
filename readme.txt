@@ -22,6 +22,7 @@ Features:
 * Displays viewer count
 * Displays title message
 * Displays wich game is played
+* Has its own cache feature
 
 == Installation ==
 
@@ -36,9 +37,13 @@ To show multiple channels in one widget simply add a comma seperated list of cha
 = Is this an official plugin ceated by hitbox.tv? =
 No.
 
+= How do i manually purge the widgets cache? =
+Cache is automaticaly purged whenever you klick the widgets 'Save' button.
+
 == Screenshots ==
 
 1. Frontpage
+2. Widget settings
 
 == Changelog ==
 
