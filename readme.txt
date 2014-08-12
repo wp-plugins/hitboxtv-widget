@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,9 @@ No.
 1. Frontpage
 
 == Changelog ==
+
+= 1.2=
+* Fixes for WP.org
 
 = 1.1 =
 * Single widget can now show multiple channels for better styleing. You can enter a comma (,) seperated list of channels
