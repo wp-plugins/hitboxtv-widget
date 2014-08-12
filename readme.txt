@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -25,7 +25,7 @@ Features:
 
 == Installation ==
 
-1. Upload everything into `hitbox-tv-widget` directory to the `/wp-content/plugins/` directory. Keep the structure intact.
+1. Upload everything into `hitboxtv-widget` directory to the `/wp-content/plugins/` directory. Keep the structure intact.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Activate/configure the widget in the 'Widget' menu in WordPress.
 
@@ -41,6 +41,12 @@ No.
 1. Frontpage
 
 == Changelog ==
+
+= 1.3 =
+* Added option to hide offline streams
+* Added configurable cache (#74)
+* Fixed improper whitespace cleanup on 'Channel' field
+* Various code cleanups
 
 = 1.2 =
 * Fixes for WP.org
@@ -59,7 +65,6 @@ No.
 Just overwrite existing files.
 
 == Notes ==
-IMPORTANT NOTE:
 
 I'm only hosting the stable code at WordPress!
 For actual development versions please visit http://code.spiffytek.com/wp-hitbox-status-widget

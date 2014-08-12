@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-function _hitbox_status($channel = false){
+function _hitbox_status($channel = false, $options = false){
 	$name = $channel;
 
 	$api = 'http://api.hitbox.tv/media/live/'.$name;
@@ -42,8 +42,9 @@ function _hitbox_status($channel = false){
 			$boxart = HITBOX_TV_WIDGET_URI.'/assets/images/unknown.jpg';
 		}
 		$txt .= '<span class="st-hitbox-widget-image"><a target="_blank" href="http://www.hitbox.tv/'.$name.'"><img src="'.$boxart.'" alt=""></a></span>';
-	}
-	else{
+	}elseif($stream['livestream'][0]['media_is_live'] == 0 && $options['hide_offline'] == 1){
+		return '';
+	}else{
 		$txt = '<span class="st-hitbox-widget-title"><a target="_blank" href="http://www.hitbox.tv/'.$name.'">'.$stream['livestream'][0]['media_user_name'].'</a></span>';
 		$txt .= '<span class="st-hitbox-widget-indicator">Offline</span>';
 		$boxart = HITBOX_TV_WIDGET_URI.'/assets/images/offline.jpg';
