@@ -1,5 +1,5 @@
 === Hitbox.TV Widget ===
-Contributors:
+Contributors: MadMakz
 Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
@@ -33,10 +33,12 @@ To show multiple channels in one widget simply add a comma seperated list of cha
 
 == Frequently Asked Questions ==
 
+= Is this an official plugin ceated by hitbox.tv? =
+No.
 
 == Screenshots ==
 
-screenshot.jpg
+1. Frontpage
 
 == Changelog ==
 
@@ -50,7 +52,10 @@ screenshot.jpg
 = 1.0 =
 * First working version
 
-== Arbitrary section ==
+== Upgrade Notice ==
+Just overwrite existing files.
+
+== Notes ==
 IMPORTANT NOTE:
 
 I'm only hosting the stable code at WordPress!
