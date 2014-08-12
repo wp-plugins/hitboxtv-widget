@@ -42,7 +42,7 @@ No.
 
 == Changelog ==
 
-= 1.2=
+= 1.2 =
 * Fixes for WP.org
 
 = 1.1 =
