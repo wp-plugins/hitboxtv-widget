@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,7 +30,23 @@ Features:
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Activate/configure the widget in the 'Widget' menu in WordPress.
 
-To show multiple channels in one widget simply add a comma seperated list of channels into the widgets 'Channel' field.
+= Configuration =
+
+* Multiple Channels:
+	1. To show multiple channels in one widget simply add a comma seperated list of channels into the widgets 'Channel' field.
+* Usage of the `[hitbox][/hitbox]` Shortcode:
+	* Simply add the channel name between the tags eg.: `[hitbox]hitboxlive[/hitbox]`
+	* Optional: There are some options to control the appearance:
+		1. For the video:
+			* `video` Enables or disables the video. Options: true|false. Default: true
+			* `vwidth` Controls the width of the embedded video. Default: 640
+			* `vheight` Controls the heigt of the embedded video. Default: 360
+		1. For the chat:
+			* `chat` Enables or disables the chat. Options: true|false. Default: true
+			* `cwidth` Controls the width of the embedded chat. Default: 360
+			* `cheight` Controls the heigt of the embedded chat. Default: 640
+		* Example: `[hitbox vwidth=848 vheight=480 chat=false]hitboxlive[/hitbox]` will show the 'hitboxlive' channel video in 848x480 pixels in size and the chat won't be shown
+
 
 == Frequently Asked Questions ==
 
@@ -46,6 +62,10 @@ Cache is automaticaly purged whenever you klick the widgets 'Save' button.
 2. Widget settings
 
 == Changelog ==
+
+= 1.4 =
+* Added option to disable channel message
+* Added [hitbox][/hitbox] shortcode (See Installation/readme.txt notes for detailed info)
 
 = 1.3 =
 * Added option to hide offline streams

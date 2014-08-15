@@ -3,7 +3,7 @@
 Plugin Name: Hitbox.TV Widget
 Plugin URI: http://wordpress.org/plugins/hitboxtv-widget/
 Description: Hitbox.TV status widget.
-Version: 1.3
+Version: 1.4
 Author: SpiffyTek
 Author URI: http://spiffytek.com/
 License: Copyright (C) 2014 SpiffyTek
@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 class st_hitbox_widget extends WP_Widget{
 	function st_hitbox_widget(){
-		parent::WP_Widget(false, $name = __('Hitbox.TV Widget', 'wp_widget_plugin'));
+		parent::WP_Widget(false, $name = __('Hitbox.TV Widget', 'st_hitbox_widget'));
 	}
 	
 	function form($instance){
@@ -33,35 +33,41 @@ class st_hitbox_widget extends WP_Widget{
 			$title = esc_attr($instance['title']);
 			$text = esc_attr($instance['text']);
 			$hide_offline = esc_attr($instance['hide_offline']);
+			$hide_message = esc_attr($instance['hide_message']);
 			$cache_enable = esc_attr($instance['cache_enable']);
 			$cache_lifetime = esc_attr($instance['cache_lifetime']);
 		}else{
 			$title = '';
 			$text = '';
-			$hide_offline = '';
-			$cache_enable = '';
+			$hide_offline = 0;
+			$hide_message = 0;
+			$cache_enable = 0;
 			$cache_lifetime = 300;
 		}
 ?>	
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title', 'wp_widget_plugin'); ?></label>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Widget Title', 'st_hitbox_widget'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('text'); ?>"><?php _e('Channel or multiple channels seperated by comma:', 'wp_widget_plugin'); ?></label>
+			<label for="<?php echo $this->get_field_id('text'); ?>"><?php _e('Channel or multiple channels seperated by comma:', 'st_hitbox_widget'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>" type="text" value="<?php echo $text; ?>" />
 		</p>
 		<p>
 			<input id="<?php echo $this->get_field_id('hide_offline'); ?>" name="<?php echo $this->get_field_name('hide_offline'); ?>" type="checkbox" value="1" <?php checked('1', $hide_offline); ?> />
-			<label for="<?php echo $this->get_field_id('hide_offline'); ?>"><?php _e('Hide offline channels', 'wp_widget_plugin'); ?></label>
+			<label for="<?php echo $this->get_field_id('hide_offline'); ?>"><?php _e('Hide offline channels', 'st_hitbox_widget'); ?></label>
+		</p>
+		<p>
+			<input id="<?php echo $this->get_field_id('hide_message'); ?>" name="<?php echo $this->get_field_name('hide_message'); ?>" type="checkbox" value="1" <?php checked('1', $hide_message); ?> />
+			<label for="<?php echo $this->get_field_id('hide_message'); ?>"><?php _e('Hide channel message', 'st_hitbox_widget'); ?></label>
 		</p>
 		<p>
 			<input id="<?php echo $this->get_field_id('cache_enable'); ?>" name="<?php echo $this->get_field_name('cache_enable'); ?>" type="checkbox" value="1" <?php checked('1', $cache_enable); ?> />
-			<label for="<?php echo $this->get_field_id('cache_enable'); ?>"><?php _e('Enable cache', 'wp_widget_plugin'); ?></label>
+			<label for="<?php echo $this->get_field_id('cache_enable'); ?>"><?php _e('Enable cache', 'st_hitbox_widget'); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('cache_lifetime'); ?>"><?php _e('Cache lifetime:', 'wp_widget_plugin'); ?>
-			<input style="width: 30%" class="widefat" id="<?php echo $this->get_field_id('cache_lifetime'); ?>" name="<?php echo $this->get_field_name('cache_lifetime'); ?>" type="text" value="<?php echo $cache_lifetime; ?>" /><?php _e('(seconds)', 'wp_widget_plugin'); ?></label>
+			<label for="<?php echo $this->get_field_id('cache_lifetime'); ?>"><?php _e('Cache lifetime:', 'st_hitbox_widget'); ?>
+			<input style="width: 30%" class="widefat" id="<?php echo $this->get_field_id('cache_lifetime'); ?>" name="<?php echo $this->get_field_name('cache_lifetime'); ?>" type="text" value="<?php echo $cache_lifetime; ?>" /><?php _e('(seconds)', 'st_hitbox_widget'); ?></label>
 		</p>
 <?php
 	}
@@ -71,6 +77,7 @@ class st_hitbox_widget extends WP_Widget{
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['text'] = strip_tags($new_instance['text']);
 		$instance['hide_offline'] = strip_tags($new_instance['hide_offline']);
+		$instance['hide_message'] = strip_tags($new_instance['hide_message']);
 		$instance['cache_enable'] = strip_tags($new_instance['cache_enable']);
 		$instance['cache_lifetime'] = strip_tags($new_instance['cache_lifetime']);
 		if($this->id){
@@ -92,7 +99,7 @@ class st_hitbox_widget extends WP_Widget{
 		}
 
 		if($text){
-			define('HITBOX_TV_WIDGET_PATH', plugin_dir_path( __FILE__ ));
+			define('HITBOX_TV_WIDGET_PATH', plugin_dir_path(__FILE__));
 			define('HITBOX_TV_WIDGET_URI', plugins_url('', __FILE__));
 			require_once(HITBOX_TV_WIDGET_PATH.'includes/functions.php');
 			
@@ -120,17 +127,51 @@ class st_hitbox_widget extends WP_Widget{
 			echo '</ul>
 				</div>';
 		}else{
-			echo '<p class="wp_widget_plugin_text">No channel set!</p>';
+			echo '<p class="st_hitbox_widget_text">No channel set!</p>';
 		}
 		
 		echo $after_widget;
 	}
 }
 
-add_action('widgets_init', create_function('', 'return register_widget("st_hitbox_widget");'));
-add_action('wp_enqueue_scripts', '_sthw_add_stylesheet');
+function _sthw_shortcode($atts, $content = ''){
+	$content = preg_replace(array('/\s/', '/\xA0/', '/\xC2/'), '', $content);
+	$args = shortcode_atts(array(
+		'video' => 'true',
+		'vwidth' => '640',
+		'vheight' => '360',
+		'chat' => 'true',
+		'cwidth' => '360',
+		'cheight' => '640'
+	), $atts, 'hitbox');
+
+	$return = '';
+
+	if(!empty($content)){
+		if($args['video'] != 'false'){
+			$return .= '<iframe width="'.$args['vwidth'].'" height="'.$args['vheight'].'" src="http://www.hitbox.tv/#!/embed/'.$content.'?autoplay=true" frameborder="0" allowfullscreen></iframe>';
+		}
+		if($args['chat'] != 'false'){
+			$return .= '<iframe width="'.$args['cwidth'].'" height="'.$args['cheight'].'" src="http://www.hitbox.tv/embedchat/'.$content.'" frameborder="0" allowfullscreen></iframe>';
+		}
+		
+	}else{
+		$return = 'NO HITBOX CHANNEL SET!';
+	}
+
+	return $return;
+}
+
 
 function _sthw_add_stylesheet(){
 	wp_enqueue_style('st-hitbox-widget', plugins_url('style.css', __FILE__));
 }
+function _sthw_translate(){
+	load_plugin_textdomain('st_hitbox_widget', false, plugin_dir_path(__FILE__).'languages');
+}
+
+add_action('init', '_sthw_translate');
+add_action('widgets_init', create_function('', 'return register_widget("st_hitbox_widget");'));
+add_action('wp_enqueue_scripts', '_sthw_add_stylesheet');
+add_shortcode('hitbox', '_sthw_shortcode');
 ?>
