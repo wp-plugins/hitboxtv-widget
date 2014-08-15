@@ -23,6 +23,7 @@ Features:
 * Displays title message
 * Displays wich game is played
 * Has its own cache feature
+* `[hitbox][/hitbox]` Shortcode
 
 == Installation ==
 
