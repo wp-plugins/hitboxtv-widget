@@ -3,7 +3,7 @@
 Plugin Name: Hitbox.TV Widget
 Plugin URI: http://wordpress.org/plugins/hitboxtv-widget/
 Description: Hitbox.TV status widget.
-Version: 1.4
+Version: 1.5.0
 Author: SpiffyTek
 Author URI: http://spiffytek.com/
 License: Copyright (C) 2014 SpiffyTek
@@ -23,6 +23,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define('HITBOX_TV_WIDGET_PATH_FULL', __FILE__);
+define('HITBOX_TV_WIDGET_PATH', plugin_dir_path(HITBOX_TV_WIDGET_PATH_FULL));
+define('HITBOX_TV_WIDGET_URI', plugins_url('', HITBOX_TV_WIDGET_PATH_FULL));
+require_once(HITBOX_TV_WIDGET_PATH.'includes/functions.php');
+require_once(HITBOX_TV_WIDGET_PATH.'includes/options.php');
+
 class st_hitbox_widget extends WP_Widget{
 	function st_hitbox_widget(){
 		parent::WP_Widget(false, $name = __('Hitbox.TV Widget', 'st_hitbox_widget'));
@@ -34,15 +40,11 @@ class st_hitbox_widget extends WP_Widget{
 			$text = esc_attr($instance['text']);
 			$hide_offline = esc_attr($instance['hide_offline']);
 			$hide_message = esc_attr($instance['hide_message']);
-			$cache_enable = esc_attr($instance['cache_enable']);
-			$cache_lifetime = esc_attr($instance['cache_lifetime']);
 		}else{
 			$title = '';
 			$text = '';
 			$hide_offline = 0;
 			$hide_message = 0;
-			$cache_enable = 0;
-			$cache_lifetime = 300;
 		}
 ?>	
 		<p>
@@ -61,14 +63,6 @@ class st_hitbox_widget extends WP_Widget{
 			<input id="<?php echo $this->get_field_id('hide_message'); ?>" name="<?php echo $this->get_field_name('hide_message'); ?>" type="checkbox" value="1" <?php checked('1', $hide_message); ?> />
 			<label for="<?php echo $this->get_field_id('hide_message'); ?>"><?php _e('Hide channel message', 'st_hitbox_widget'); ?></label>
 		</p>
-		<p>
-			<input id="<?php echo $this->get_field_id('cache_enable'); ?>" name="<?php echo $this->get_field_name('cache_enable'); ?>" type="checkbox" value="1" <?php checked('1', $cache_enable); ?> />
-			<label for="<?php echo $this->get_field_id('cache_enable'); ?>"><?php _e('Enable cache', 'st_hitbox_widget'); ?></label>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id('cache_lifetime'); ?>"><?php _e('Cache lifetime:', 'st_hitbox_widget'); ?>
-			<input style="width: 30%" class="widefat" id="<?php echo $this->get_field_id('cache_lifetime'); ?>" name="<?php echo $this->get_field_name('cache_lifetime'); ?>" type="text" value="<?php echo $cache_lifetime; ?>" /><?php _e('(seconds)', 'st_hitbox_widget'); ?></label>
-		</p>
 <?php
 	}
 	
@@ -78,8 +72,6 @@ class st_hitbox_widget extends WP_Widget{
 		$instance['text'] = strip_tags($new_instance['text']);
 		$instance['hide_offline'] = strip_tags($new_instance['hide_offline']);
 		$instance['hide_message'] = strip_tags($new_instance['hide_message']);
-		$instance['cache_enable'] = strip_tags($new_instance['cache_enable']);
-		$instance['cache_lifetime'] = strip_tags($new_instance['cache_lifetime']);
 		if($this->id){
 			delete_transient($this->id);
 		}
@@ -99,22 +91,29 @@ class st_hitbox_widget extends WP_Widget{
 		}
 
 		if($text){
-			define('HITBOX_TV_WIDGET_PATH', plugin_dir_path(__FILE__));
-			define('HITBOX_TV_WIDGET_URI', plugins_url('', __FILE__));
-			require_once(HITBOX_TV_WIDGET_PATH.'includes/functions.php');
 			
 			$text = explode(',', preg_replace('/\s/', '', $text));
 			
 			echo '<div class="st-hitbox-widget-holder">
 					<ul>';				
 					
-			if(!get_transient($cache_key) || $instance['cache_enable'] != 1){
-					
+			if(!get_transient($cache_key) || get_option('sthw_cache_enable') != 1){
+				
 				for($i = 0; $i <= count($text) - 1; $i++){
-					$return[] = _hitbox_status($text[$i], $instance);
+					if(substr(strtolower($text[$i]), 0, 5) == 'team:'){
+						$text[$i] = str_replace('team:', '', strtolower($text[$i]));
+						$team = _hitbox_get_teammembers($text[$i]);
+						$channel = array_merge($channel, $team);
+					}else{
+						$channel[] = $text[$i];
+					}
 				}
 				
-				set_transient($cache_key, $return, $instance['cache_lifetime']);
+				for($i = 0; $i <= count($channel) - 1; $i++){
+					$return[] = _hitbox_status($channel[$i], $instance);
+				}
+				
+				set_transient($cache_key, $return, get_option('sthw_cache_lifetime'));
 				
 			}else{
 				$return = get_transient($cache_key);
@@ -129,49 +128,17 @@ class st_hitbox_widget extends WP_Widget{
 		}else{
 			echo '<p class="st_hitbox_widget_text">No channel set!</p>';
 		}
-		
+
 		echo $after_widget;
 	}
-}
-
-function _sthw_shortcode($atts, $content = ''){
-	$content = preg_replace(array('/\s/', '/\xA0/', '/\xC2/'), '', $content);
-	$args = shortcode_atts(array(
-		'video' => 'true',
-		'vwidth' => '640',
-		'vheight' => '360',
-		'chat' => 'true',
-		'cwidth' => '360',
-		'cheight' => '640'
-	), $atts, 'hitbox');
-
-	$return = '';
-
-	if(!empty($content)){
-		if($args['video'] != 'false'){
-			$return .= '<iframe width="'.$args['vwidth'].'" height="'.$args['vheight'].'" src="http://www.hitbox.tv/#!/embed/'.$content.'?autoplay=true" frameborder="0" allowfullscreen></iframe>';
-		}
-		if($args['chat'] != 'false'){
-			$return .= '<iframe width="'.$args['cwidth'].'" height="'.$args['cheight'].'" src="http://www.hitbox.tv/embedchat/'.$content.'" frameborder="0" allowfullscreen></iframe>';
-		}
-		
-	}else{
-		$return = 'NO HITBOX CHANNEL SET!';
-	}
-
-	return $return;
-}
-
-
-function _sthw_add_stylesheet(){
-	wp_enqueue_style('st-hitbox-widget', plugins_url('style.css', __FILE__));
-}
-function _sthw_translate(){
-	load_plugin_textdomain('st_hitbox_widget', false, plugin_dir_path(__FILE__).'languages');
 }
 
 add_action('init', '_sthw_translate');
 add_action('widgets_init', create_function('', 'return register_widget("st_hitbox_widget");'));
 add_action('wp_enqueue_scripts', '_sthw_add_stylesheet');
+add_action('admin_menu', '_sthw_options_page');
 add_shortcode('hitbox', '_sthw_shortcode');
+register_activation_hook(HITBOX_TV_WIDGET_PATH_FULL, '_sthw_install');
+register_deactivation_hook(HITBOX_TV_WIDGET_PATH.'/uninstall.php', '_sthw_uninstall');
+register_uninstall_hook(HITBOX_TV_WIDGET_PATH.'/uninstall.php', '_sthw_uninstall');
 ?>

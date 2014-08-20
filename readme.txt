@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.4
+Stable tag: 1.5.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,18 +34,21 @@ Features:
 = Configuration =
 
 * Multiple Channels:
-	1. To show multiple channels in one widget simply add a comma seperated list of channels into the widgets 'Channel' field.
+	* To show multiple channels in one widget simply add a comma seperated list of channels into the widgets 'Channel' field.
+* Teams:
+	1. Simply add `team:` infront of the team-channel name
+	1. Example: For team hitbox.tv/team/hitbox simply use `team:hitbox` as channel name
 * Usage of the `[hitbox][/hitbox]` Shortcode:
 	* Simply add the channel name between the tags eg.: `[hitbox]hitboxlive[/hitbox]`
 	* Optional: There are some options to control the appearance:
 		1. For the video:
 			* `video` Enables or disables the video. Options: true|false. Default: true
 			* `vwidth` Controls the width of the embedded video. Default: 640
-			* `vheight` Controls the heigt of the embedded video. Default: 360
+			* `vheight` Controls the height of the embedded video. Default: 360
 		1. For the chat:
 			* `chat` Enables or disables the chat. Options: true|false. Default: true
 			* `cwidth` Controls the width of the embedded chat. Default: 360
-			* `cheight` Controls the heigt of the embedded chat. Default: 640
+			* `cheight` Controls the height of the embedded chat. Default: 640
 		* Example: `[hitbox vwidth=848 vheight=480 chat=false]hitboxlive[/hitbox]` will show the 'hitboxlive' channel video in 848x480 pixels in size and the chat won't be shown
 
 
@@ -61,8 +64,17 @@ Cache is automaticaly purged whenever you klick the widgets 'Save' button.
 
 1. Frontpage
 2. Widget settings
+3. Plugin settings
 
 == Changelog ==
+[Full changelog](http://builds.spiffytek.net/changelogs/wp-hitbox-status-widget.txt)
+
+= 1.5.0 =
+* Added (simple) Team support. See Installation/readme.txt for usage (#76)
+	* This will be extended in future
+* Added options page for global settings like cache
+* Added global option to hide "Unknown channel"
+* New version scheme (major.minor.maintenance)
 
 = 1.4 =
 * Added option to disable channel message
@@ -71,7 +83,7 @@ Cache is automaticaly purged whenever you klick the widgets 'Save' button.
 = 1.3 =
 * Added option to hide offline streams
 * Added configurable cache (#74)
-* Fixed improper whitespace cleanup on 'Channel' field
+* Fixed improper whitespace cleanup on 'Channel' field (#75)
 * Various code cleanups
 
 = 1.2 =
