@@ -1,0 +1,35 @@
+.st-hitbox-widget-holder {
+}
+
+.st-hitbox-widget-holder ul {
+    list-style-type: none;
+}
+
+.st-hitbox-widget-list-item {
+	display: block;
+}
+
+.st-hitbox-widget-title {
+	font-weight: bold;
+}
+
+.st-hitbox-widget-indicator {
+    float: right;
+}
+
+.st-hitbox-widget-status{
+	display: block;
+	font-weight: bold;
+}
+
+.st-hitbox-widget-category{
+	display: block;
+}
+
+.st-hitbox-widget-image, .st-hitbox-widget-image > a {
+	margin: 3px;
+}
+
+.st-hitbox-widget-image img {
+    max-width: 95%;
+}
