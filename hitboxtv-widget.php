@@ -3,7 +3,7 @@
 Plugin Name: Hitbox.TV Widget
 Plugin URI: http://wordpress.org/plugins/hitboxtv-widget/
 Description: Hitbox.TV status widget.
-Version: 1.5.0
+Version: 1.5.1
 Author: SpiffyTek
 Author URI: http://spiffytek.com/
 License: Copyright (C) 2014 SpiffyTek

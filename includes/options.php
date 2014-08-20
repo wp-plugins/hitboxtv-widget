@@ -75,7 +75,7 @@ function _sthw_options_page_show(){
 			
 			<tr valign="top">
 				<th scope="row"><?php _e('Cache lifetime:', 'st_hitbox_widget'); ?></th>
-				<td><input type="text" name="sthw_chache_lifetime" value="<?php echo get_option('sthw_cache_lifetime'); ?>" /><?php _e('(seconds)', 'st_hitbox_widget'); ?></td>
+				<td><input type="text" name="sthw_cache_lifetime" value="<?php echo get_option('sthw_cache_lifetime'); ?>" /><?php _e('(seconds)', 'st_hitbox_widget'); ?></td>
 			</tr>
 		</table>
 		<h3>Misc</h3>

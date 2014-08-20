@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -68,6 +68,9 @@ Cache is automaticaly purged whenever you klick the widgets 'Save' button.
 
 == Changelog ==
 [Full changelog](http://builds.spiffytek.net/changelogs/wp-hitbox-status-widget.txt)
+
+= 1.5.1 =
+* Fixed bug on option page that made it impossible to change cache lifetime
 
 = 1.5.0 =
 * Added (simple) Team support. See Installation/readme.txt for usage (#76)
