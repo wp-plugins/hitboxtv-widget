@@ -74,14 +74,14 @@ function _sthw_options_page_show(){
 			</tr>
 			
 			<tr valign="top">
-				<th scope="row"><?php _e('Cache lifetime:', 'st_hitbox_widget'); ?></th>
+				<th scope="row"><?php _e('Cache lifetime', 'st_hitbox_widget'); ?></th>
 				<td><input type="text" name="sthw_cache_lifetime" value="<?php echo get_option('sthw_cache_lifetime'); ?>" /><?php _e('(seconds)', 'st_hitbox_widget'); ?></td>
 			</tr>
 		</table>
 		<h3>Misc</h3>
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row"><?php _e('Hide unknown channels:', 'st_hitbox_widget'); ?></th>
+				<th scope="row"><?php _e('Hide unknown channels', 'st_hitbox_widget'); ?></th>
 				<td><input type="checkbox" name="sthw_hide_unknown" value="1" <?php checked('1', get_option('sthw_hide_unknown')); ?>></input></td>
 			</tr>
 		</table>

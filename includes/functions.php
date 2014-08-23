@@ -36,6 +36,7 @@ function _hitbox_status($channel = false, $instance = false){
 	$stream = json_decode(wp_remote_retrieve_body($hitbox), true);
 	
 	if($stream['livestream'][0]['media_is_live'] != 0){
+		$boxart = 'http://edge.sf.hitbox.tv'.$stream['livestream'][0]['media_thumbnail'];
 		$txt = '<span class="st-hitbox-widget-title"><a target="_blank" href="http://www.hitbox.tv/'.$name.'">'.$stream['livestream'][0]['media_user_name'].'</a></span>';
 		$txt .= '<span class="st-hitbox-widget-indicator">'.$stream['livestream'][0]['media_views'].'</span>';
 		if($instance['hide_message'] == 0){
@@ -43,11 +44,10 @@ function _hitbox_status($channel = false, $instance = false){
 		}
 		if(!empty($stream['livestream'][0]['category_name'])){
 			$txt .= '<span class="st-hitbox-widget-category">'.$stream['livestream'][0]['category_name'].'</span>';
-			$boxart = 'http://edge.sf.hitbox.tv'.$stream['livestream'][0]['media_thumbnail'];
-		}else{
-			$boxart = HITBOX_TV_WIDGET_URI.'/assets/images/unknown.jpg';
 		}
-		$txt .= '<span class="st-hitbox-widget-image"><a target="_blank" href="http://www.hitbox.tv/'.$name.'"><img src="'.$boxart.'" alt=""></a></span>';
+		if($instance['hide_preview'] == 0){
+			$txt .= '<span class="st-hitbox-widget-image"><a target="_blank" href="http://www.hitbox.tv/'.$name.'"><img src="'.$boxart.'" alt=""></a></span>';
+		}
 	}elseif($stream['livestream'][0]['media_is_live'] == 0 && $instance['hide_offline'] == 1){
 		return '';
 	}else{
@@ -111,10 +111,6 @@ function _sthw_shortcode($atts, $content = ''){
 
 function _sthw_add_stylesheet(){
 	wp_enqueue_style('st-hitbox-widget', HITBOX_TV_WIDGET_URI.'/style.css');
-}
-
-function _sthw_translate(){
-	load_plugin_textdomain('st_hitbox_widget', false, HITBOX_TV_WIDGET_PATH.'languages');
 }
 
 function _sthw_version() {

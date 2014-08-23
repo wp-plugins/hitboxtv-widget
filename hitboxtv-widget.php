@@ -3,7 +3,7 @@
 Plugin Name: Hitbox.TV Widget
 Plugin URI: http://wordpress.org/plugins/hitboxtv-widget/
 Description: Hitbox.TV status widget.
-Version: 1.5.1
+Version: 1.5.2
 Author: SpiffyTek
 Author URI: http://spiffytek.com/
 License: Copyright (C) 2014 SpiffyTek
@@ -40,11 +40,13 @@ class st_hitbox_widget extends WP_Widget{
 			$text = esc_attr($instance['text']);
 			$hide_offline = esc_attr($instance['hide_offline']);
 			$hide_message = esc_attr($instance['hide_message']);
+			$hide_preview = esc_attr($instance['hide_preview']);
 		}else{
 			$title = '';
 			$text = '';
 			$hide_offline = 0;
 			$hide_message = 0;
+			$hide_preview = 0;
 		}
 ?>	
 		<p>
@@ -52,7 +54,7 @@ class st_hitbox_widget extends WP_Widget{
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('text'); ?>"><?php _e('Channel or multiple channels seperated by comma:', 'st_hitbox_widget'); ?></label>
+			<label for="<?php echo $this->get_field_id('text'); ?>"><?php _e('Channel or multiple channels seperated by comma', 'st_hitbox_widget'); ?>:</label>
 			<input class="widefat" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>" type="text" value="<?php echo $text; ?>" />
 		</p>
 		<p>
@@ -63,6 +65,10 @@ class st_hitbox_widget extends WP_Widget{
 			<input id="<?php echo $this->get_field_id('hide_message'); ?>" name="<?php echo $this->get_field_name('hide_message'); ?>" type="checkbox" value="1" <?php checked('1', $hide_message); ?> />
 			<label for="<?php echo $this->get_field_id('hide_message'); ?>"><?php _e('Hide channel message', 'st_hitbox_widget'); ?></label>
 		</p>
+		<p>
+			<input id="<?php echo $this->get_field_id('hide_preview'); ?>" name="<?php echo $this->get_field_name('hide_preview'); ?>" type="checkbox" value="1" <?php checked('1', $hide_preview); ?> />
+			<label for="<?php echo $this->get_field_id('hide_preview'); ?>"><?php _e('Hide preview image', 'st_hitbox_widget'); ?></label>
+		</p>
 <?php
 	}
 	
@@ -72,6 +78,7 @@ class st_hitbox_widget extends WP_Widget{
 		$instance['text'] = strip_tags($new_instance['text']);
 		$instance['hide_offline'] = strip_tags($new_instance['hide_offline']);
 		$instance['hide_message'] = strip_tags($new_instance['hide_message']);
+		$instance['hide_preview'] = strip_tags($new_instance['hide_preview']);
 		if($this->id){
 			delete_transient($this->id);
 		}
@@ -133,12 +140,12 @@ class st_hitbox_widget extends WP_Widget{
 	}
 }
 
-add_action('init', '_sthw_translate');
 add_action('widgets_init', create_function('', 'return register_widget("st_hitbox_widget");'));
 add_action('wp_enqueue_scripts', '_sthw_add_stylesheet');
 add_action('admin_menu', '_sthw_options_page');
 add_shortcode('hitbox', '_sthw_shortcode');
+load_plugin_textdomain('st_hitbox_widget', false, dirname(plugin_basename(HITBOX_TV_WIDGET_PATH_FULL)).'/languages/');
 register_activation_hook(HITBOX_TV_WIDGET_PATH_FULL, '_sthw_install');
-register_deactivation_hook(HITBOX_TV_WIDGET_PATH.'/uninstall.php', '_sthw_uninstall');
-register_uninstall_hook(HITBOX_TV_WIDGET_PATH.'/uninstall.php', '_sthw_uninstall');
+register_deactivation_hook(HITBOX_TV_WIDGET_PATH.'uninstall.php', '_sthw_uninstall');
+register_uninstall_hook(HITBOX_TV_WIDGET_PATH.'uninstall.php', '_sthw_uninstall');
 ?>
