@@ -3,7 +3,7 @@
 Plugin Name: Hitbox.TV Widget
 Plugin URI: http://wordpress.org/plugins/hitboxtv-widget/
 Description: Hitbox.TV status widget.
-Version: 1.5.2
+Version: 1.5.3
 Author: SpiffyTek
 Author URI: http://spiffytek.com/
 License: Copyright (C) 2014 SpiffyTek
@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 define('HITBOX_TV_WIDGET_PATH_FULL', __FILE__);
 define('HITBOX_TV_WIDGET_PATH', plugin_dir_path(HITBOX_TV_WIDGET_PATH_FULL));
 define('HITBOX_TV_WIDGET_URI', plugins_url('', HITBOX_TV_WIDGET_PATH_FULL));
+define('STHW_CHANNEL_LIMIT', 30);
 require_once(HITBOX_TV_WIDGET_PATH.'includes/functions.php');
 require_once(HITBOX_TV_WIDGET_PATH.'includes/options.php');
 
@@ -110,13 +111,21 @@ class st_hitbox_widget extends WP_Widget{
 					if(substr(strtolower($text[$i]), 0, 5) == 'team:'){
 						$text[$i] = str_replace('team:', '', strtolower($text[$i]));
 						$team = _hitbox_get_teammembers($text[$i]);
-						$channel = array_merge($channel, $team);
+						if(is_array($team)){
+							$channel = array_merge($channel, $team);
+						}
 					}else{
 						$channel[] = $text[$i];
 					}
 				}
 				
-				for($i = 0; $i <= count($channel) - 1; $i++){
+				$ch_count = count($channel);
+				if($ch_count > STHW_CHANNEL_LIMIT){
+					$ch_count = STHW_CHANNEL_LIMIT;
+					array_rand($channel);
+				}
+					
+				for($i = 0; $i <= $ch_count - 1; $i++){
 					$return[] = _hitbox_status($channel[$i], $instance);
 				}
 				

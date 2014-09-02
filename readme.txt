@@ -4,7 +4,7 @@ Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget, shortcode
 Requires at least: 3.9.0
 Tested up to: 3.9.2
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,7 +58,11 @@ Features:
 No.
 
 = How do i manually purge the widgets cache? =
-Cache is automaticaly purged whenever you klick the widgets 'Save' button.
+Cache is automaticaly purged whenever you klick the widgets 'Save' button or save on the global options.
+
+= Where to put translations? =
+Translations go into the `/wp-content/plugins/hitboxtv-widget/languages/` folder.
+You may have to create the `languages` folder first.
 
 == Screenshots ==
 
@@ -68,6 +72,11 @@ Cache is automaticaly purged whenever you klick the widgets 'Save' button.
 
 == Changelog ==
 [Full changelog](http://builds.spiffytek.net/changelogs/wp-hitbox-status-widget.txt)
+
+= 1.5.3 =
+* Removed german translation. See ticket #80 for reason
+* Limited total channels to 30 to not penetrate the HB-API and keeps a reasonable website loading time. If there are more than 30 channels in queue it'll show show up to 30 channels randomly.
+	* You can modify this limit manualy by editing STHW_CHANNEL_LIMIT setting in hitboxtv-widget.php
 
 = 1.5.2 =
 * Added option to hide stream preview image
