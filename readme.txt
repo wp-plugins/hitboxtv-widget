@@ -3,7 +3,7 @@ Contributors: MadMakz
 Donate link: http://spiffytek.com/spenden/
 Tags: hitbox, status, live, widget, shortcode
 Requires at least: 3.9.0
-Tested up to: 3.9.2
+Tested up to: 4.0.0
 Stable tag: 1.5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
