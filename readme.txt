@@ -1,10 +1,10 @@
 === Hitbox.TV Widget ===
 Contributors: MadMakz
-Donate link: http://spiffytek.com/spenden/
+Donate link: http://spiffytek.de/spenden/
 Tags: hitbox, status, live, widget, shortcode
 Requires at least: 3.9.0
-Tested up to: 4.0.0
-Stable tag: 1.5.3
+Tested up to: 4.0.1
+Stable tag: 1.5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
