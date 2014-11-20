@@ -73,6 +73,10 @@ You may have to create the `languages` folder first.
 == Changelog ==
 [Full changelog](http://builds.spiffytek.net/changelogs/wp-hitbox-status-widget.txt)
 
+= 1.5.4 =
+* Small relocation of code
+* Compatible up to WP4.0.1
+
 = 1.5.3 =
 * Removed german translation. See ticket #80 for reason
 * Limited total channels to 30 to not penetrate the HB-API and keeps a reasonable website loading time. If there are more than 30 channels in queue it'll show show up to 30 channels randomly.
