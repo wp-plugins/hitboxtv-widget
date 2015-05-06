@@ -126,4 +126,4 @@ Just overwrite existing files.
 == Notes ==
 
 I'm only hosting the stable code at WordPress!
-For actual development versions please visit http://code.spiffytek.com/wp-hitbox-status-widget
+For actual development versions please visit http://code.spiffytek.de/SpiffyTek/WP-Hitbox.TV_Widget
